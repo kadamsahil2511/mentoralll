@@ -1,0 +1,26 @@
+{
+  "name": "mentoralll",
+  "private": true,
+  "version": "0.0.0",
+  "type": "module",
+  "scripts": {
+    "dev": "vite --host",
+    "build": "vite build",
+    "preview": "vite preview"
+  },
+  "dependencies": {
+    "react": "^19.1.1",
+    "react-dom": "^19.1.1",
+    "date-fns": "^4.1.0",
+    "react-router-dom": "^7.9.1",
+    "react-hook-form": "^7.63.0",
+    "lucide-react": "^0.544.0",
+    "framer-motion": "^12.23.20"
+  },
+  "devDependencies": {
+    "@types/node": "^22.14.0",
+    "@vitejs/plugin-react": "^5.0.0",
+    "typescript": "~5.8.2",
+    "vite": "^6.2.0"
+  }
+}
