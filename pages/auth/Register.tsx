@@ -74,11 +74,11 @@ export const Register: React.FC = () => {
                 <div className="mt-2 grid grid-cols-2 gap-4">
                   <label className={`relative flex items-center p-3 border rounded-md cursor-pointer ${selectedRole === UserRole.JUNIOR ? 'bg-blue-50 border-primary dark:bg-blue-900/50' : 'border-gray-300 dark:border-gray-600'}`}>
                     <input type="radio" {...register('role')} value={UserRole.JUNIOR} className="sr-only"/>
-                    <span className="text-sm font-medium text-gray-900 dark:text-white">Junior Student</span>
+                    <span className="text-sm font-medium text-gray-900 dark:text-white">Student</span>
                   </label>
                   <label className={`relative flex items-center p-3 border rounded-md cursor-pointer ${selectedRole === UserRole.SENIOR ? 'bg-blue-50 border-primary dark:bg-blue-900/50' : 'border-gray-300 dark:border-gray-600'}`}>
                     <input type="radio" {...register('role')} value={UserRole.SENIOR} className="sr-only"/>
-                    <span className="text-sm font-medium text-gray-900 dark:text-white">Senior (Alumni)</span>
+                    <span className="text-sm font-medium text-gray-900 dark:text-white">Employee</span>
                   </label>
                 </div>
               </div>

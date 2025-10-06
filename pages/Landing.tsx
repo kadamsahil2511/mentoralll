@@ -1,4 +1,3 @@
-
 import React from 'react';
 import { Link } from 'react-router-dom';
 import { motion } from 'framer-motion';
@@ -29,10 +28,73 @@ const featureCards = [
     }
 ];
 
+const studentTestimonials = [
+    {
+        name: 'Aarav Sharma',
+        package: '₹30k at TCS',
+        review: 'The mentorship helped me crack interviews with confidence.',
+        image: 'https://randomuser.me/api/portraits/men/11.jpg'
+    },
+    {
+        name: 'Simran Kaur',
+        package: '₹18k at Infosys',
+        review: 'Amazing guidance and real interview experiences.',
+        image: 'https://randomuser.me/api/portraits/women/21.jpg'
+    },
+    {
+        name: 'Rahul Verma',
+        package: '₹15k at Deloitte',
+        review: 'I found my mentor here who changed everything for me.',
+        image: 'https://randomuser.me/api/portraits/men/31.jpg'
+    },
+    {
+        name: 'Ishita Mehta',
+        package: '₹20k at Amazon',
+        review: 'Direct alumni support gave me absolute clarity.',
+        image: 'https://randomuser.me/api/portraits/women/41.jpg'
+    },
+    {
+        name: 'Rohan Patil',
+        package: '₹14k at Accenture',
+        review: 'A game changer for my career preparation.',
+        image: 'https://randomuser.me/api/portraits/men/51.jpg'
+    },
+    {
+        name: 'Neha Singh',
+        package: '₹22k at Microsoft',
+        review: 'The mock interviews were incredibly helpful.',
+        image: 'https://randomuser.me/api/portraits/women/61.jpg'
+    },
+    {
+        name: 'Yash Gupta',
+        package: '₹16k at Wipro',
+        review: 'Real guidance from alumni made all the difference.',
+        image: 'https://randomuser.me/api/portraits/men/71.jpg'
+    },
+    {
+        name: 'Priya Nair',
+        package: '₹19k at Capgemini',
+        review: 'Networking here opened unexpected doors.',
+        image: 'https://randomuser.me/api/portraits/women/81.jpg'
+    },
+    {
+        name: 'Siddharth Rao',
+        package: '₹21k at Google',
+        review: 'The best mentorship platform hands down.',
+        image: 'https://randomuser.me/api/portraits/men/91.jpg'
+    },
+    {
+        name: 'Tanvi Desai',
+        package: '₹17k at IBM',
+        review: 'Got career clarity and interview preparation help.',
+        image: 'https://randomuser.me/api/portraits/women/12.jpg'
+    }
+];
+
+
 export const Landing: React.FC = () => {
     return (
         <div className="text-gray-800 dark:text-gray-200">
-            {/* Hero Section */}
             <section className="relative text-center py-20 md:py-32 px-4 overflow-hidden">
                 <div className="absolute inset-0 bg-gradient-to-br from-blue-100 to-indigo-200 dark:from-gray-800 dark:to-gray-900 opacity-70"></div>
                 <div className="absolute inset-0 bg-grid-pattern dark:bg-grid-pattern-dark mask-gradient"></div>
@@ -59,7 +121,6 @@ export const Landing: React.FC = () => {
                 </motion.div>
             </section>
 
-            {/* Features Section */}
             <section className="py-16 md:py-24 bg-white dark:bg-gray-900">
                 <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
                     <div className="text-center">
@@ -89,11 +150,32 @@ export const Landing: React.FC = () => {
                     </div>
                 </div>
             </section>
+
+            <section className="py-16 md:py-24 bg-gray-50 dark:bg-gray-800 overflow-hidden">
+                <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+                    <h2 className="text-3xl font-bold tracking-tight text-gray-900 dark:text-white text-center mb-10">Success Stories from Students</h2>
+                    <div className="relative group">
+                        <div className="flex gap-6 animate-scroll group-hover:[animation-play-state:paused]">
+                            {studentTestimonials.concat(studentTestimonials).map((student, index) => (
+                                <Card key={index} className="min-w-[350px] flex-shrink-0">
+                                    <CardContent className="flex items-center gap-4 p-4">
+                                        <img src={student.image} alt={student.name} className="w-16 h-16 rounded-full object-cover" />
+                                        <div>
+                                            <h3 className="text-lg font-semibold text-gray-900 dark:text-white">{student.name}</h3>
+                                            <p className="text-primary text-sm">{student.package}</p>
+                                            <p className="text-gray-600 dark:text-gray-400 text-sm mt-1">{student.review}</p>
+                                        </div>
+                                    </CardContent>
+                                </Card>
+                            ))}
+                        </div>
+                    </div>
+                </div>
+            </section>
         </div>
     );
 };
 
-// Helper CSS for the grid pattern in a style tag, as we can't create css files.
 const style = document.createElement('style');
 style.innerHTML = `
 .bg-grid-pattern {
@@ -107,6 +189,13 @@ style.innerHTML = `
 .mask-gradient {
     mask-image: radial-gradient(circle, white 50%, transparent 100%);
     -webkit-mask-image: radial-gradient(circle, white 50%, transparent 100%);
+}
+@keyframes scroll {
+    0% { transform: translateX(0); }
+    100% { transform: translateX(-50%); }
+}
+.animate-scroll {
+    animation: scroll 25s linear infinite;
 }
 `;
 document.head.appendChild(style);
