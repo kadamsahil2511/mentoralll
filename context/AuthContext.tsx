@@ -1,56 +1,49 @@
-
 import React, { createContext, useState, useContext, useEffect, ReactNode } from 'react';
-import { User } from '../types';
-import { users } from '../data/mockData';
+import { supabase } from '../lib/supabaseClient';
 
 interface AuthContextType {
   isAuthenticated: boolean;
-  user: User | null;
-  login: (email: string) => Promise<User | null>;
-  logout: () => void;
+  user: any;
+  login: (email: string, password: string) => Promise<void>;
+  logout: () => Promise<void>;
   loading: boolean;
 }
 
 const AuthContext = createContext<AuthContextType | undefined>(undefined);
 
 export const AuthProvider: React.FC<{ children: ReactNode }> = ({ children }) => {
-  const [user, setUser] = useState<User | null>(null);
+  const [user, setUser] = useState<any>(null);
   const [loading, setLoading] = useState(true);
 
   useEffect(() => {
-    try {
-      const storedUser = localStorage.getItem('user');
-      if (storedUser) {
-        setUser(JSON.parse(storedUser));
-      }
-    } catch (error) {
-      console.error("Failed to parse user from localStorage", error);
-      localStorage.removeItem('user');
-    } finally {
+    const initializeAuth = async () => {
+      const { data } = await supabase.auth.getUser();
+      setUser(data?.user ?? null);
       setLoading(false);
-    }
+    };
+
+    initializeAuth();
+
+    const { data: listener } = supabase.auth.onAuthStateChange((_event, session) => {
+      setUser(session?.user ?? null);
+    });
+
+    return () => {
+      listener.subscription.unsubscribe();
+    };
   }, []);
 
-  const login = async (email: string): Promise<User | null> => {
+  const login = async (email: string, password: string) => {
     setLoading(true);
-    return new Promise((resolve) => {
-      setTimeout(() => {
-        const foundUser = users.find(u => u.email === email);
-        if (foundUser) {
-          setUser(foundUser);
-          localStorage.setItem('user', JSON.stringify(foundUser));
-          resolve(foundUser);
-        } else {
-          resolve(null);
-        }
-        setLoading(false);
-      }, 1000);
-    });
+    const { error, data } = await supabase.auth.signInWithPassword({ email, password });
+    if (error) throw error;
+    setUser(data?.user ?? null);
+    setLoading(false);
   };
 
-  const logout = () => {
+  const logout = async () => {
+    await supabase.auth.signOut();
     setUser(null);
-    localStorage.removeItem('user');
   };
 
   const value = {
@@ -58,7 +51,7 @@ export const AuthProvider: React.FC<{ children: ReactNode }> = ({ children }) =>
     user,
     login,
     logout,
-    loading
+    loading,
   };
 
   return (
